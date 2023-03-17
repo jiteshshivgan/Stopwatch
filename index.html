@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://kit.fontawesome.com/7b6fdf30a8.js"
+      crossorigin="anonymous"
+    ></script>
+    <link href="index.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Stopwatch box -->
+    <div class="stopwatch">
+      <h1 class="displayTime">00:00:00</h1>
+      <div class="buttons">
+        <img src="Images/reset.png" onclick="reset()" />
+        <img src="Images/start1.png" onclick="watchStart()" />
+        <img src="Images/stop.png" onclick="clearInterval(timer)" />
+      </div>
+    </div>
+    <script>
+      let seconds = 0;
+      let minutes = 0;
+      let hours = 0;
+      let timer = null;
+      let displayTime = document.querySelector(".displayTime");
+
+      // function related to how the stopwatch actually work
+      function stopwatch() {
+        seconds++;
+        if (seconds == 60) {
+          seconds = 0;
+          minutes++;
+          if (minutes == 60) {
+            minutes = 0;
+            hours++;
+          }
+        }
+        // If the sec, min, hour is less than 10, we don't want only 1 digit to come, so we added these condition
+        let h = hours < 10 ? "0" + hours : hours;
+        let m = minutes < 10 ? "0" + minutes : minutes;
+        let s = seconds < 10 ? "0" + seconds : seconds;
+        displayTime.textContent = h + ":" + m + ":" + s;
+      }
+
+      function watchStart() {
+        if (timer != null) {
+          clearInterval(timer);
+        }
+        timer = setInterval(stopwatch, 1000);
+      }
+      function reset() {
+        clearInterval(timer);
+        seconds = 0;
+        minutes = 0;
+        hours = 0;
+        displayTime.textContent = "00:00:00";
+      }
+    </script>
+  </body>
+</html>
